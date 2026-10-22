@@ -1,0 +1,72 @@
+{
+    "gold": [
+        {
+            "metal": "Золото",
+            "name": "Золото 375 проба",
+            "price_per_gram": 3900,
+            "premium_price_per_gram": null
+        },
+        {
+            "metal": "Золото",
+            "name": "Золото 500 проба",
+            "price_per_gram": 5200,
+            "premium_price_per_gram": null
+        },
+        {
+            "metal": "Золото",
+            "name": "Золото 583/585 проба",
+            "price_per_gram": 6100,
+            "premium_price_per_gram": 6500
+        },
+        {
+            "metal": "Золото",
+            "name": "Золото 750 проба",
+            "price_per_gram": 7800,
+            "premium_price_per_gram": null
+        },
+        {
+            "metal": "Золото",
+            "name": "Золото 850 проба",
+            "price_per_gram": 8850,
+            "premium_price_per_gram": null
+        },
+        {
+            "metal": "Золото",
+            "name": "Золото 900 проба",
+            "price_per_gram": 9350,
+            "premium_price_per_gram": null
+        },
+        {
+            "metal": "Золото",
+            "name": "Золото 999 проба",
+            "price_per_gram": 10400,
+            "premium_price_per_gram": null
+        }
+    ],
+    "silver": [
+        {
+            "metal": "Серебро",
+            "name": "Серебро 875 проба",
+            "price_per_gram": 100,
+            "premium_price_per_gram": null
+        },
+        {
+            "metal": "Серебро",
+            "name": "Серебро 900 проба",
+            "price_per_gram": 100,
+            "premium_price_per_gram": null
+        },
+        {
+            "metal": "Серебро",
+            "name": "Серебро 925 проба",
+            "price_per_gram": 100,
+            "premium_price_per_gram": null
+        },
+        {
+            "metal": "Серебро",
+            "name": "Серебро 999 проба",
+            "price_per_gram": 100,
+            "premium_price_per_gram": null
+        }
+    ]
+}

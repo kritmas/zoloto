@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг Cash-Gold</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h1 { margin: 0; font-size: 20px; color: #fff; }
+        .header-info { font-size: 12px; color: #888; margin-top: 5px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background-color: #222;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+        }
+        .card-title {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+        .card-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .card-premium {
+            font-size: 12px;
+            color: #d4af37;
+            margin-top: 4px;
+        }
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #333;
+            color: #aaa;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+        .badge.minimum { background: #1e3a1e; color: #4caf50; border: 1px solid #2e5c2e; }
+        .badge.range { background: #3a2e1e; color: #ff9800; border: 1px solid #5c4a2e; }
+        
+        .card-status {
+            font-size: 11px;
+            color: #666;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .card-status::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #f44336; /* Красная полоска как на фото */
+        }
+        
+        h2 { font-size: 16px; color: #aaa; margin: 20px 0 10px 0; font-weight: normal;}
+        
+        .footer {
+            margin-top: 30px;
+            padding: 10px;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>CashGold - лом Au / Ag</h1>
+            <div class="header-info">₽ / г - только мониторинг · обновлено: {{ data.timestamp if data else '...' }}</div>
+        </div>
+        <div style="font-size: 14px; color: #aaa;">cash-gold.ru</div>
+    </div>
+
+    {% if data %}
+        <h2>Серебро</h2>
+        <div class="grid">
+            {% for item in data.silver %}
+            <div class="card">
+                <div class="badge minimum">{{ item.status }}</div>
+                <div class="card-title">{{ item.name }}</div>
+                <div class="card-price">{{ item.price }},00</div>
+                <div class="card-status">ЛОМ - не в аукционе</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2>Золото</h2>
+        <div class="grid">
+            {% for item in data.gold %}
+            <div class="card">
+                <div class="badge {{ 'range' if item.status == 'в диапазоне' else 'minimum' }}">
+                    {{ item.status }}
+                </div>
+                <div class="card-title">{{ item.name }}</div>
+                <div class="card-price">{{ "{:,}".format(item.price).replace(',', ' ') }},00</div>
+                {% if item.premium %}
+                    <div class="card-premium">премиум {{ item.premium }},00</div>
+                {% endif %}
+                <div class="card-status">ЛОМ - не в аукционе</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="footer">
+            <span>Данные с главной страницы сайта</span>
+            <span>Курс USD ЦБ: {{ "%.2f"|format(data.usd) }} ₽</span>
+        </div>
+    {% else %}
+        <p>Загрузка данных...</p>
+    {% endif %}
+
+    <script>
+        setTimeout(function(){ location.reload(); }, 30000);
+    </script>
+</body>
+</html>
