@@ -26,6 +26,10 @@ def get_cash_gold():
     results = {"gold": [], "silver": [], "timestamp": datetime.now().strftime("%d.%m.%Y %H:%M:%S")}
 
     gold_container = soup.find(id="gold-probes")
+            if not gold_container:
+            print("DEBUG: Блок с золотом (id='gold-probes') не найден на странице!")
+            # Сохраняем кусок HTML, чтобы понять, что там
+            print(f"DEBUG HTML: {soup.text[:500]}") 
     if gold_container:
         for btn in gold_container.find_all("button", class_="probe-btn"):
             name = btn.get("data-name")
