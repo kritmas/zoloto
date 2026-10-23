@@ -9,9 +9,19 @@ current_data = None
 
 def update_data():
     global current_data
-    current_data = parser.get_all_data()
+    try:
+        current_data = parser.get_all_data()
+        if current_data and current_data.get("cash_gold"):
+            print("✅ Данные успешно обновлены на сервере!")
+        else:
+            print("⚠️ Данные загружены, но список скупки пуст (возможно, сайт блокирует IP).")
+    except Exception as e:
+        print(f"❌ ОШИБКА при парсинге на Render: {e}")
+        # Если произошла ошибка, ставим заглушку, чтобы страница не выдавала 500
+        if current_data is None:
+            current_data = {"cash_gold": None, "vtb": [], "timestamp": "Ошибка загрузки данных"}
 
-# Обновляем каждые 15 минут (ВТБ тяжело грузить чаще)
+# Обновляем каждые 15 минут
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=update_data, trigger="interval", minutes=15)
 scheduler.start()
