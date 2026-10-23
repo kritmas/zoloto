@@ -2,26 +2,23 @@ from flask import Flask, render_template
 from apscheduler.schedulers.background import BackgroundScheduler
 import parser
 import atexit
+import os
 
 app = Flask(__name__)
-
-# Глобальная переменная для хранения текущих данных
 current_data = None
 
 def update_data():
-    """Функция для обновления данных. Вызывается таймером."""
     global current_data
-    current_data = parser.get_prices()
+    current_data = parser.get_all_data()
 
-# Настраиваем планировщик: обновлять каждые 30 минут (можно поменять на минуты)
+# Обновляем каждые 15 минут (ВТБ тяжело грузить чаще)
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=update_data, trigger="interval", minutes=3)
+scheduler.add_job(func=update_data, trigger="interval", minutes=15)
 scheduler.start()
 
-# Запускаем парсинг сразу при старте сервера (чтобы не ждать 30 минут)
+# Первый запуск
 update_data()
 
-# Корректно останавливаем планировщик при выключении
 atexit.register(lambda: scheduler.shutdown())
 
 @app.route('/')
@@ -29,6 +26,5 @@ def index():
     return render_template('index.html', data=current_data)
 
 if __name__ == '__main__':
-    import os
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=False)
