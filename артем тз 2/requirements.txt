@@ -4,3 +4,5 @@ Flask==3.0.2
 APScheduler==3.10.
 gunicorn
 playwright
+selenium
+webdriver-manager
