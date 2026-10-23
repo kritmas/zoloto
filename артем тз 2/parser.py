@@ -12,6 +12,11 @@ def get_cash_gold():
     
     try:
         response = requests.get(url, headers=headers, timeout=15)
+                # ВРЕМЕННАЯ ОТЛАДКА
+        print(f"DEBUG: Статус ответа от cash-gold.ru: {response.status_code}")
+        if response.status_code != 200:
+            print(f"DEBUG: Текст ответа: {response.text[:200]}") # Первые 200 символов
+        # КОНЕЦ ОТЛАДКИ
         response.raise_for_status()
     except Exception as e:
         print(f"❌ Ошибка cash-gold: {e}")
