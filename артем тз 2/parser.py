@@ -62,6 +62,10 @@ def get_vtb_metals():
         print("⏳ Загрузка ВТБ через Selenium...")
         
         # Настройки браузера (безголовый режим, чтобы не открывалось окно)
+                # Указываем путь к Chrome, который мы скачали на Render
+        if os.path.exists("./chrome/chrome-linux64/chrome"):
+            chrome_options.binary_location = "./chrome/chrome-linux64/chrome"
+            os.environ["PATH"] += os.pathsep + os.path.abspath("./chrome/chromedriver-linux64")
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
